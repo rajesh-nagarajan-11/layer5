@@ -1,6 +1,5 @@
 import React from "react";
-import loadable from "@loadable/component";
-const IntegrationsGrid = loadable(() => import("./IntegrationsGrid"));
+import IntegrationsGrid from "./IntegrationsGrid";
 import FAQ from "../../General/Faq";
 import { IntegrationsWrapper } from "./Integration.style";
 import Card from "./Card";
@@ -25,8 +24,10 @@ const Integrations = () => {
               <>
                 <IntegrationsGrid count={13} />
                 <div style={{ marginTop: "20px" }}>
-                  <Button className="seeAllBtn"
-                    $primary title={"See All"}
+                  <Button
+                    className="seeAllBtn"
+                    $primary
+                    title={"See All"}
                     $url="cloud-native-management/meshery/integrations/"
                   />
                 </div>

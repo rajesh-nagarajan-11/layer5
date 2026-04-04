@@ -1,7 +1,7 @@
 import React from "react";
 import slugify from "../../../utils/slugify";
 
-import { SRLWrapper } from "simple-react-lightbox";
+import { SRLWrapper } from "../../../components/LightboxWrapper";
 import { FaTwitter } from "@react-icons/all-files/fa/FaTwitter";
 import { FaGithub } from "@react-icons/all-files/fa/FaGithub";
 import { FaLinkedin } from "@react-icons/all-files/fa/FaLinkedin";

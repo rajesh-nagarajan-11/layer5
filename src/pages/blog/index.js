@@ -3,42 +3,46 @@ import useDataList from "../../utils/usedataList";
 import SEO from "../../components/seo";
 import BlogGrid from "../../sections/Blog/Blog-grid";
 import { graphql } from "gatsby";
-import loadable from "@loadable/component";
 import LitePlaceholder from "../../templates/lite-placeholder";
-const BlogList = loadable(() => import ("../../sections/Blog/Blog-list"));
+import BlogList from "../../sections/Blog/Blog-list";
 
-export const query = graphql`query allBlogs {
-  allMdx(
-    sort: {fields: {dateForSort: DESC}}
-    filter: {fields: {collection: {eq: "blog"}}, frontmatter: {published: {eq: true}}}
-  ) {
-    nodes {
-      id
-      frontmatter {
-        title
-        date(formatString: "MMM Do, YYYY")
-        author
-        thumbnail {
-          extension
-          publicURL
-          childImageSharp {
-            gatsbyImageData(width: 480, layout: CONSTRAINED)
-          }
-        }
-        darkthumbnail {
-          extension
-          publicURL
-          childImageSharp {
-            gatsbyImageData(width: 480, layout: CONSTRAINED)
-          }
-        }
+export const query = graphql`
+  query allBlogs {
+    allMdx(
+      sort: { fields: { dateForSort: DESC } }
+      filter: {
+        fields: { collection: { eq: "blog" } }
+        frontmatter: { published: { eq: true } }
       }
-      fields {
-        slug
+    ) {
+      nodes {
+        id
+        frontmatter {
+          title
+          date(formatString: "MMM Do, YYYY")
+          author
+          thumbnail {
+            extension
+            publicURL
+            childImageSharp {
+              gatsbyImageData(width: 480, layout: CONSTRAINED)
+            }
+          }
+          darkthumbnail {
+            extension
+            publicURL
+            childImageSharp {
+              gatsbyImageData(width: 480, layout: CONSTRAINED)
+            }
+          }
+        }
+        fields {
+          slug
+        }
       }
     }
   }
-}`;
+`;
 
 const Blog = (props) => {
   const nodes = props.data?.allMdx?.nodes ?? [];
@@ -62,7 +66,7 @@ const Blog = (props) => {
     setSearchQuery,
     searchQuery,
     ["frontmatter", "title"],
-    "id"
+    "id",
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
@@ -100,11 +104,15 @@ const Blog = (props) => {
         currentPage={currentPage}
         queryResults={queryResults}
       />
-
     </>
   );
 };
 export default Blog;
 export const Head = () => {
-  return <SEO title="Blog" description="The latest news and announcements about Layer5, our products, and our ecosystem, as well as voices from across our community." />;
+  return (
+    <SEO
+      title="Blog"
+      description="The latest news and announcements about Layer5, our products, and our ecosystem, as well as voices from across our community."
+    />
+  );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "gatsby";
 
-import { SRLWrapper } from "simple-react-lightbox";
+import { SRLWrapper } from "../../../components/LightboxWrapper";
 import { Container, Row, Col } from "../../../reusecore/Layout";
 import TOC from "../../../components/Learn-Components/TOC-Chapters";
 import Image from "../../../components/image";

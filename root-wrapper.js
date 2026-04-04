@@ -7,7 +7,7 @@ import CTA_Bottom from "./src/components/Call-To-Actions/CTA_Bottom";
 import { ContextWrapper } from "./context-wrapper";
 
 // Custom image component for better CLS scores
-const OptimizedImage = props => {
+const OptimizedImage = (props) => {
   return (
     <div style={{ width: "100%", height: "auto" }}>
       <img
@@ -17,7 +17,7 @@ const OptimizedImage = props => {
         style={{
           objectFit: props.objectFit || "contain",
           margin: "20px 0px",
-          ...props.style
+          ...props.style,
         }}
         loading="lazy"
         alt={props.alt || "Blog content image"}
@@ -27,29 +27,35 @@ const OptimizedImage = props => {
 };
 
 const components = {
-  pre: ({ children: { props } }) => {
-    if (props.mdxType === "code") {
+  pre: ({ children }) => {
+    const codeProps = children?.props;
+    if (codeProps) {
       return (
         <Code
-          codeString={props.children.trim()}
-          language={
-            props.className && props.className.replace("language-", "")
+          codeString={
+            typeof codeProps.children === "string"
+              ? codeProps.children.trim()
+              : ""
           }
-          {...props}
+          language={
+            codeProps.className && codeProps.className.replace("language-", "")
+          }
+          {...codeProps}
         />
       );
     }
+    return <pre>{children}</pre>;
   },
   img: OptimizedImage,
   CTA_ImageOnly,
   CTA_FullWidth,
-  CTA_Bottom
+  CTA_Bottom,
 };
 
-export const wrapRootElement = ({ element }) => (
-  <ContextWrapper>
-    <MDXProvider components={components}>
-      {element}
-    </MDXProvider>
-  </ContextWrapper>
-);
+export const wrapRootElement = ({ element }) => {
+  return (
+    <ContextWrapper>
+      <MDXProvider components={components}>{element}</MDXProvider>
+    </ContextWrapper>
+  );
+};

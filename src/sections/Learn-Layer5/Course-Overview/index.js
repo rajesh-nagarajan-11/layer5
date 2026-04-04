@@ -9,7 +9,7 @@ import { IoChevronBackOutline } from "@react-icons/all-files/io5/IoChevronBackOu
 import Button from "../../../reusecore/Button";
 import ChapterCard from "../../../components/Learn-Components/Chapter-Card";
 
-import { SRLWrapper } from "simple-react-lightbox";
+import { SRLWrapper } from "../../../components/LightboxWrapper";
 import DiscussCallout from "../../Discuss-Callout";
 import SubscribeLearnPath from "../../subscribe/SubscribeLearnPath";
 import BookmarkNotification from "../../../components/Learn-Components/BookmarkNotification";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SRLWrapper } from "simple-react-lightbox";
+import { SRLWrapper } from "../../../components/LightboxWrapper";
 import { graphql, useStaticQuery } from "gatsby";
 import { Container, Row, Col } from "../../../reusecore/Layout";
 import PageHeader from "../../../reusecore/PageHeader";

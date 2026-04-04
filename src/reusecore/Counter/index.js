@@ -1,25 +1,29 @@
 import React, { useState } from "react";
 import CountUp from "react-countup";
-import VisibilitySensor from "react-visibility-sensor";
+import { useInView } from "react-intersection-observer";
 
 const Counter = ({ className, ...rest }) => {
   const [viewPortEntered, setViewPortEntered] = useState(false);
+  const { ref } = useInView({
+    triggerOnce: true,
+    onChange: (inView) => {
+      if (inView) {
+        setViewPortEntered(true);
+      }
+    },
+  });
 
   return (
     <CountUp {...rest} start={viewPortEntered ? null : 0}>
       {({ countUpRef }) => {
         return (
-          <VisibilitySensor
-            active={!viewPortEntered}
-            onChange={isVisible => {
-              if (isVisible) {
-                setViewPortEntered(true);
-              }
+          <span
+            className={className}
+            ref={(node) => {
+              countUpRef.current = node;
+              ref(node);
             }}
-            delayedCall
-          >
-            <span className={className} ref={countUpRef} />
-          </VisibilitySensor>
+          />
         );
       }}
     </CountUp>

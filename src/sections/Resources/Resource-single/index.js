@@ -1,7 +1,7 @@
 import React from "react";
 import { graphql, useStaticQuery, Link } from "gatsby";
 
-import { SRLWrapper } from "simple-react-lightbox";
+import { SRLWrapper } from "../../../components/LightboxWrapper";
 import { Container } from "../../../reusecore/Layout";
 import PageHeader from "../../../reusecore/PageHeader";
 import RelatedResources from "../../../components/Related-Resources";
@@ -10,57 +10,58 @@ import RelatedResourcesFactory from "../../../components/Related-Resources/relat
 import { IoIosArrowDropleftCircle } from "@react-icons/all-files/io/IoIosArrowDropleftCircle";
 import CTA_Bottom from "../../../components/Call-To-Actions/CTA_Bottom";
 
-
 const ResourceSingle = ({ data, children }) => {
   const { frontmatter, fields } = data.mdx;
-  const resourceData = useStaticQuery(
-    graphql`query relatedResources {
-  allMdx(
-    sort: {frontmatter: {date: DESC}}
-    filter: {fields: {collection: {eq: "resources"}}, frontmatter: {published: {eq: true}}}
-  ) {
-    nodes {
-      frontmatter {
-        title
-        date(formatString: "MMM Do YYYY")
-        author
-        category
-        tags
-        thumbnail {
-          childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH)
+  const resourceData = useStaticQuery(graphql`
+    query relatedResources {
+      allMdx(
+        sort: { frontmatter: { date: DESC } }
+        filter: {
+          fields: { collection: { eq: "resources" } }
+          frontmatter: { published: { eq: true } }
+        }
+      ) {
+        nodes {
+          frontmatter {
+            title
+            date(formatString: "MMM Do YYYY")
+            author
+            category
+            tags
+            thumbnail {
+              childImageSharp {
+                gatsbyImageData(layout: FULL_WIDTH)
+              }
+              extension
+              publicURL
+            }
+            thumbnail_svg {
+              extension
+              publicURL
+            }
+            darkthumbnail {
+              childImageSharp {
+                gatsbyImageData(layout: FULL_WIDTH)
+              }
+              extension
+              publicURL
+            }
+            darkthumbnail_svg {
+              extension
+              publicURL
+            }
           }
-          extension
-          publicURL
-        }
-        thumbnail_svg {
-          extension
-          publicURL
-        }
-        darkthumbnail {
-          childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH)
+          fields {
+            slug
           }
-          extension
-          publicURL
         }
-        darkthumbnail_svg {
-          extension
-          publicURL
-        }
-      }
-      fields {
-        slug
       }
     }
-  }
-}`
-  );
+  `);
 
   const resources = resourceData.allMdx.nodes;
-  const relatedResources = new RelatedResourcesFactory(
-    resources, fields.slug
-  ).setMaxResources(6)
+  const relatedResources = new RelatedResourcesFactory(resources, fields.slug)
+    .setMaxResources(6)
     .setCategory(frontmatter.category)
     .setTags(frontmatter.tags)
     .getResources();
@@ -70,18 +71,13 @@ const ResourceSingle = ({ data, children }) => {
       <PageHeader
         title={frontmatter.title}
         subtitle={frontmatter.subtitle}
-
         thumbnail={frontmatter.thumbnail || frontmatter.thumbnail_svg}
       />
       <div className="single-resource-wrapper">
         <Container>
-          <SRLWrapper>
-            {children}
-          </SRLWrapper>
+          <SRLWrapper>{children}</SRLWrapper>
 
-          <CTA_Bottom
-            category={"Kanvas"}
-          />
+          <CTA_Bottom category={"Kanvas"} />
 
           <div className="backBtn">
             <Link to="/resources">
